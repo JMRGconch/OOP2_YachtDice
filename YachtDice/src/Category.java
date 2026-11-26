@@ -1,5 +1,4 @@
 // 각 족보를 식별 및 관리하기 위한 상수 열거형 클래스
-// Ca
 public enum Category {
     ACES("Ones", 0),
     TWOS("Twos", 1),
