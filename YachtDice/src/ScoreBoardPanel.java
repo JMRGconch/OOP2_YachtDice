@@ -3,13 +3,12 @@
 
 import java.awt.*;
 import javax.swing.*;
+import java.util.EnumSet;
 
 public class ScoreBoardPanel extends JPanel {
-	private static int PLAYER_COUNT = 2;  // 플레이어 수
-	private static int ROW_COUNT = 15;  // 제목 1 + 윗족보 6 + 소계 1 + 아랫족보 6 + 총점 1
-	private static String[] UPPER_NAMES = {"Ones", "Twos", "Threes", "Fours", "Fives", "Sixes"};
-	private static String[] LOWER_NAMES = {"Choice", "4 of a Kind", "Full House",
-			"Small Straight", "Large Straight", "Yacht"};
+	private static final int PLAYER_COUNT = 2;  // 플레이어 수
+	private static final int CATEGORY_COUNT = Category.values().length;		// 족보 개수
+	private static final int ROW_COUNT = CATEGORY_COUNT + 3;  // 제목 1 + 윗족보 6 + 소계 1 + 아랫족보 6 + 총점 1
 
 	private JLabel[] playerNameLabels;  // 맨 위 P1, P2 칸
 	private JLabel[][] scoreLabels;  // 점수 칸 [플레이어][족보 12개]
@@ -28,7 +27,7 @@ public class ScoreBoardPanel extends JPanel {
 		setPreferredSize(new Dimension(450, 680));  // 화면 왼쪽 열의 크기
 
 		playerNameLabels = new JLabel[PLAYER_COUNT];
-		scoreLabels = new JLabel[PLAYER_COUNT][UPPER_NAMES.length + LOWER_NAMES.length];
+		scoreLabels = new JLabel[PLAYER_COUNT][CATEGORY_COUNT];
 		subtotalLabels = new JLabel[PLAYER_COUNT];
 		totalLabels = new JLabel[PLAYER_COUNT];
 
@@ -42,8 +41,8 @@ public class ScoreBoardPanel extends JPanel {
 		}
 
 		// 윗족보 (Ones ~ Sixes)
-		for (int i = 0; i < UPPER_NAMES.length; i++) {
-			addScoreRow(UPPER_NAMES[i], i, 1);
+		for (Category c : EnumSet.range(Category.ACES, Category.SIXES)) {
+			addScoreRow(c, 1);
 		}
 
 		// 소계 줄 (아래에 굵은 선)
@@ -54,9 +53,9 @@ public class ScoreBoardPanel extends JPanel {
 		}
 
 		// 아랫족보 (Choice ~ Yacht), Choice 아래에 굵은 선
-		for (int i = 0; i < LOWER_NAMES.length; i++) {
-			int bottom = (i == 0) ? 2 : 1;
-			addScoreRow(LOWER_NAMES[i], UPPER_NAMES.length + i, bottom);
+		for (Category c : EnumSet.range(Category.CHOICE, Category.YACHT)) {
+			int bottom = (c.getName().equals("Choice")) ? 2 : 1;
+			addScoreRow(c, bottom);
 		}
 
 		// 총점 줄
@@ -68,7 +67,9 @@ public class ScoreBoardPanel extends JPanel {
 	}
 
 	// 족보 한 줄 추가 (족보 이름 + 플레이어별 빈 점수 칸)
-	private void addScoreRow(String name, int index, int bottom) {
+	private void addScoreRow(Category c, int bottom) {
+		String name = c.getName();
+		int index = c.getIndex();
 		add(createCell(name, bottom, false));
 		for (int p = 0; p < PLAYER_COUNT; p++) {
 			scoreLabels[p][index] = createCell("", bottom, false);  // 처음에는 빈 칸

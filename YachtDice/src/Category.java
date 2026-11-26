@@ -23,12 +23,12 @@ public enum Category {
     }
 
     // 족보 이름 반환
-    public String getCategoryName() {
+    public String getName() {
         return this.categoryName;
     }
 
     // 족보 인덱스 반환
-    public int getCategoryIndex() {
+    public int getIndex() {
         return this.categoryIndex;
     }
 }
