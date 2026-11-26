@@ -54,7 +54,7 @@ public class ScoreBoardPanel extends JPanel {
 
 		// 아랫족보 (Choice ~ Yacht), Choice 아래에 굵은 선
 		for (Category c : EnumSet.range(Category.CHOICE, Category.YACHT)) {
-			int bottom = (c.getName().equals("Choice")) ? 2 : 1;
+			int bottom = (c == Category.CHOICE) ? 2 : 1;
 			addScoreRow(c, bottom);
 		}
 
