@@ -1,47 +1,56 @@
 // 메인 게임 화면
-// 왼쪽: 점수판 / 가운데: 주사위 / 오른쪽: 턴 수 + 규칙 요약 / 아래: 스킬
+// 왼쪽: 점수판, 가운데: 주사위, 오른쪽: 턴 수 + 규칙 요약, 아래: 스킬
 
 import java.awt.*;
 import javax.swing.*;
 
 public class GamePanel extends JPanel{
-	private MainFrame frame;
-	private DicePanel dicePanel;
-	private ScoreBoardPanel scoreBoardPanel;
-	private SkillPanel skillPanel;
+	private MainFrame frame;  // MainFrame의 정보를 받음
+	
+	private DicePanel dicePanel;  // 주사위 칸
+	private ScoreBoardPanel scoreBoardPanel;  // 점수판
+	private SkillPanel skillPanel;  // 스킬 칸
+	
 	private JLabel turnLabel;  // 턴 수
-	private JTextArea ruleArea;  // 규칙 설명 요약
-
+	private JTextArea ruleLabel;  // 규칙 설명 요약
+	
+	private int nowTurn = 1;  // 현재 턴
+	
+	// 생성자
 	public GamePanel(MainFrame frame) {
 		this.frame = frame;
-		initUI();
-	}
-
-	// UI 배치
-	public void initUI() {
-		setLayout(new BorderLayout(10, 0));  // 왼쪽 점수판과 오른쪽 영역 사이 간격 10
-		setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));  // 화면 가장자리 여백
-
+		
+		// 패널 사이의 간격을 10으로 설정
+		setLayout(new BorderLayout(10, 10));
+		// 화면 가장자리 여백
+		setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));  
+		
+		// 점수판 위치 잡기 (왼쪽)
 		scoreBoardPanel = new ScoreBoardPanel();
-		add(scoreBoardPanel, BorderLayout.WEST);  // 왼쪽: 점수판
-		add(RightArea(), BorderLayout.CENTER);  // 나머지: 주사위, 정보, 스킬
-	}
-
-	// 점수판 오른쪽 영역 (가운데: 주사위 / 오른쪽: 정보 / 아래: 스킬)
-	private JPanel RightArea() {
-		JPanel area = new JPanel(new BorderLayout(10, 10));
-
+		add(scoreBoardPanel, BorderLayout.WEST);
+				
+		// 주사위 칸 위치 잡기 (가운데)
 		dicePanel = new DicePanel();
+		add(dicePanel, BorderLayout.CENTER);
+				
+		// 스킬 칸 위치 잡기 (아래)
 		skillPanel = new SkillPanel();
-
-		area.add(dicePanel, BorderLayout.CENTER);  // 가운데: 주사위
-		area.add(InfoArea(), BorderLayout.EAST);  // 오른쪽: 턴 수 + 규칙 요약
-		area.add(skillPanel, BorderLayout.SOUTH);  // 아래: 스킬 (주사위와 정보 영역 아래에 걸쳐 있음)
-		return area;
+		add(skillPanel, BorderLayout.SOUTH);
+				
+		// 현재 턴 수 표시 칸
+		turnLabel = new JLabel("턴  " + nowTurn + " / 12", SwingConstants.CENTER);
+		turnLabel.setFont(turnLabel.getFont().deriveFont(Font.BOLD, 28f));
+		add(turnLabel, BorderLayout.EAST);
+				
+		// 규칙 요약 칸
+		//ruleLabel = new JLabel("")
+		
+		
+		
 	}
-
+/*
 	// 오른쪽 정보 영역 (위: 턴 수 / 아래: 규칙 요약)
-	private JPanel InfoArea() {
+	private JPanel infoArea() {
 		JPanel area = new JPanel(new BorderLayout(0, 10));
 		area.setPreferredSize(new Dimension(240, 0));  // 너비만 정함 (높이는 BorderLayout이 채움)
 
@@ -67,5 +76,5 @@ public class GamePanel extends JPanel{
 		area.add(ruleArea, BorderLayout.CENTER);
 
 		return area;
-	}
+	}*/
 }

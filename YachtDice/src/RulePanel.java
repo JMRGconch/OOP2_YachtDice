@@ -1,9 +1,9 @@
 import javax.swing.*;
 
-public class SetupPanel extends JPanel {
+public class RulePanel extends JPanel {
 	private MainFrame frame;
 	
-	public SetupPanel(MainFrame frame) {
+	public RulePanel(MainFrame frame) {
 		this.frame = frame;
 		
 	}

@@ -20,25 +20,25 @@ public class DicePanel extends JPanel {
 	// UI 배치
 	public void initUI() {
 		setLayout(new BorderLayout(0, 10));  // 두 영역 사이의 거리
-		add(KeptArea(), BorderLayout.NORTH);  // 보관된 주사위 칸의 위치 (위)
-		add(RolledArea(), BorderLayout.CENTER);  // 주사위 및 굴리기 칸의 위치 (가운데)
+		add(keptArea(), BorderLayout.NORTH);  // 보관된 주사위 칸의 위치 (위)
+		add(rolledArea(), BorderLayout.CENTER);  // 주사위 및 굴리기 칸의 위치 (가운데)
 	}
 
 	// 보관된 주사위 영역
-	private JPanel KeptArea() {
+	private JPanel keptArea() {
 		JPanel area = new JPanel(new FlowLayout(FlowLayout.CENTER, 12, 8));
 		area.setBorder(TitledBorder("보관된 주사위"));
 
 		keptButtons = new JButton[DICE_COUNT];
 		for (int i = 0; i < DICE_COUNT; i++) {
-			keptButtons[i] = DiceButton("");  // 처음에는 빈 칸
+			keptButtons[i] = diceButton("");  // 처음에는 빈 칸
 			area.add(keptButtons[i]);
 		}
 		return area;
 	}
 
 	// 굴린 주사위 영역 (주사위 5개 + 아래쪽 버튼 줄)
-	private JPanel RolledArea() {
+	private JPanel rolledArea() {
 		JPanel area = new JPanel(new BorderLayout());
 		area.setBorder(TitledBorder("주사위"));
 
@@ -46,7 +46,7 @@ public class DicePanel extends JPanel {
 		JPanel diceRow = new JPanel(new FlowLayout(FlowLayout.CENTER, 12, 0));
 		rolledButtons = new JButton[DICE_COUNT];
 		for (int i = 0; i < DICE_COUNT; i++) {
-			rolledButtons[i] = DiceButton("?");  // 굴리기 전이라 ?로 표시
+			rolledButtons[i] = diceButton("?");  // 굴리기 전이라 ?로 표시
 			diceRow.add(rolledButtons[i]);
 		}
 
@@ -68,7 +68,7 @@ public class DicePanel extends JPanel {
 	}
 
 	// 주사위 버튼 하나를 같은 모양으로 만듦
-	private JButton DiceButton(String text) {
+	private JButton diceButton(String text) {
 		JButton button = new JButton(text);
 		button.setPreferredSize(new Dimension(80, 80));  // FlowLayout은 setSize가 아니라 PreferredSize를 따름
 		button.setFocusable(false);  // 나중에 키보드 조작(setupKeys)을 할 때 버튼이 포커스를 가져가지 않게 함
