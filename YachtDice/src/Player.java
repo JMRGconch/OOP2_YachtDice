@@ -59,22 +59,9 @@ public class Player {
         return skills[s.getIndex()];
     }
 
-    // 스킬 사용
+    // 스킬 사용되었다는 것만 표시
     public void useSkill(Skill s) {
         skills[s.getIndex()] = false;   // 사용 불가로 전환
-        switch(s) {
-            case DICE_CHANGE:
-                                // (몇 번 주사위가 선택되었는지 알아야 함)
-                break;
-            case EXTRA_ROLL:
-                addRoll();      // 굴림 횟수 1 증가
-                break;
-            case SIXTH_DIE:
-                addSixthDie();  // 6번째 주사위 추가
-                break;
-            default:
-                break;
-        }
     }
 
     // 플레이어 정보 초기화
